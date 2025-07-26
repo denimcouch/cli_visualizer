@@ -100,17 +100,17 @@
   - [x] 2.8 Implement audio sensitivity and gain controls
   - [x] 2.9 Update RuboCop configuration with sensible rules for audio codebase
 
-- [ ] 3.0 Visualization Engine and Rendering
+- [x] 3.0 Visualization Engine and Rendering
 
   - [x] 3.1 Create base visualization class with common interface
   - [x] 3.2 Implement frequency spectrum bar visualizer (equalizer-style)
   - [x] 3.3 Build waveform pattern visualization engine
   - [x] 3.4 Create abstract artistic pattern generator
-  - [ ] 3.5 Develop terminal ASCII renderer with animation support
-  - [ ] 3.6 Add color support with terminal capability detection
-  - [ ] 3.7 Implement visualization scaling for different terminal sizes
-  - [ ] 3.8 Create ASCII character set options (basic vs extended)
-  - [ ] 3.9 Build mode switching system between visualization types
+  - [x] 3.5 Develop terminal ASCII renderer with animation support
+  - [x] 3.6 Add color support with terminal capability detection
+  - [x] 3.7 Implement visualization scaling for different terminal sizes
+  - [x] 3.8 Create ASCII character set options (basic vs extended)
+  - [x] 3.9 Build mode switching system between visualization types
   - [ ] 3.10 Add comprehensive tests for all visualization modes
 
 - [ ] 4.0 User Interface and Controls

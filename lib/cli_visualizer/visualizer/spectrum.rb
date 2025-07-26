@@ -98,7 +98,7 @@ module CliVisualizer
         }
       end
 
-      def handle_resize(new_width, new_height)
+      def handle_resize(_new_width, _new_height)
         calculate_display_layout
       end
 

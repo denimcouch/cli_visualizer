@@ -103,7 +103,7 @@ module CliVisualizer
         }
       end
 
-      def handle_resize(new_width, new_height)
+      def handle_resize(new_width, _new_height)
         samples_needed = (new_width * @time_scale).round
         @sample_buffer = Array.new(samples_needed, 0.0)
         @left_buffer = Array.new(samples_needed, 0.0)
@@ -297,7 +297,7 @@ module CliVisualizer
       end
 
       # Select appropriate character for waveform style
-      def select_waveform_char(sample, index)
+      def select_waveform_char(sample, _index)
         chars = WAVEFORM_CHARS[@style] || WAVEFORM_CHARS[:line]
 
         case @style

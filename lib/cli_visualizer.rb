@@ -33,26 +33,15 @@ module CliVisualizer
     autoload :Spectrum, "cli_visualizer/visualizer/spectrum"
     autoload :Waveform, "cli_visualizer/visualizer/waveform"
     autoload :Abstract, "cli_visualizer/visualizer/abstract"
+    autoload :ModeManager, "cli_visualizer/visualizer/mode_manager"
   end
 
   # Rendering system components
   module Renderer
     autoload :Terminal, "cli_visualizer/renderer/terminal"
     autoload :Color, "cli_visualizer/renderer/color"
-  end
-
-  # Visualization components
-  module Visualizer
-    autoload :Base, "cli_visualizer/visualizer/base"
-    autoload :Spectrum, "cli_visualizer/visualizer/spectrum"
-    autoload :Waveform, "cli_visualizer/visualizer/waveform"
-    autoload :Abstract, "cli_visualizer/visualizer/abstract"
-  end
-
-  # Rendering components
-  module Renderer
-    autoload :Terminal, "cli_visualizer/renderer/terminal"
-    autoload :Color, "cli_visualizer/renderer/color"
+    autoload :Charset, "cli_visualizer/renderer/charset"
+    autoload :Scaler, "cli_visualizer/renderer/scaler"
   end
 
   # User interface components

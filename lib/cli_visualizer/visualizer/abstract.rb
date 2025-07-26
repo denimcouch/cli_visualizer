@@ -481,7 +481,7 @@ module CliVisualizer
 
       # Pattern update methods
 
-      def update_pattern(energy, frequency_content, samples)
+      def update_pattern(energy, frequency_content, _samples)
         case @pattern
         when :particles
           # Spawn new particles based on energy
@@ -581,7 +581,7 @@ module CliVisualizer
 
       # Particle and element update methods
 
-      def update_particle(particle, energy, index)
+      def update_particle(particle, energy, _index)
         # Update position
         particle[:x] += particle[:velocity_x]
         particle[:y] += particle[:velocity_y]
