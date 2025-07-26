@@ -2,6 +2,7 @@
 description: After the `@create-prd.mdc` workflow has just completed.
 alwaysApply: false
 ---
+
 # Rule: Generating a Task List from a PRD
 
 ## Goal

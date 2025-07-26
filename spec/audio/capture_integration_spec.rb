@@ -40,6 +40,42 @@ RSpec.describe "Audio Capture Integration" do
         end
       end
 
+      context "on Linux platform" do
+        before do
+          # Mock RUBY_PLATFORM to simulate Linux
+          stub_const("RUBY_PLATFORM", "x86_64-linux-gnu")
+        end
+
+        it "creates LinuxCapture instance for system audio" do
+          capture = described_class.create(type: :system)
+
+          expect(capture).to be_a(CliVisualizer::Audio::LinuxCapture)
+          expect(capture).to be_a(CliVisualizer::Audio::Capture)
+        end
+
+        it "passes configuration options to LinuxCapture" do
+          capture = described_class.create(
+            type: :system,
+            sample_rate: 48_000,
+            channels: 1,
+            sample_size: 24
+          )
+
+          expect(capture.sample_rate).to eq(48_000)
+          expect(capture.channels).to eq(1)
+          expect(capture.sample_size).to eq(24)
+        end
+
+        it "creates different instances for multiple calls" do
+          capture1 = described_class.create(type: :system)
+          capture2 = described_class.create(type: :system)
+
+          expect(capture1).not_to be(capture2)
+          expect(capture1).to be_a(CliVisualizer::Audio::LinuxCapture)
+          expect(capture2).to be_a(CliVisualizer::Audio::LinuxCapture)
+        end
+      end
+
       context "on unsupported platform" do
         before do
           # Mock RUBY_PLATFORM to simulate unsupported platform
@@ -69,6 +105,143 @@ RSpec.describe "Audio Capture Integration" do
             expect(capture).to be_a(CliVisualizer::Audio::MacOSCapture)
           end
         end
+
+        it "recognizes various linux platforms as Linux" do
+          linux_platforms = %w[
+            x86_64-linux-gnu
+            i686-linux-gnu
+            aarch64-linux-gnu
+            x86_64-linux-musl
+            arm-linux-gnueabihf
+          ]
+
+          linux_platforms.each do |platform|
+            stub_const("RUBY_PLATFORM", platform)
+            capture = described_class.create(type: :system)
+            expect(capture).to be_a(CliVisualizer::Audio::LinuxCapture)
+          end
+        end
+      end
+    end
+  end
+
+  describe CliVisualizer::Audio::LinuxCapture do
+    let(:capture) { described_class.new }
+
+    describe "integration with base class" do
+      it "properly implements all abstract methods" do
+        expect(capture).to respond_to(:start)
+        expect(capture).to respond_to(:stop)
+        expect(capture).to respond_to(:pause)
+        expect(capture).to respond_to(:resume)
+      end
+
+      it "inherits status management from base class" do
+        expect(capture.stopped?).to be true
+        expect(capture.running?).to be false
+        expect(capture.error?).to be false
+      end
+
+      it "inherits callback management from base class" do
+        callback_called = false
+        capture.on_audio_data { callback_called = true }
+
+        # Simulate callback with test data
+        test_data = [1, 2, 3, 4, 5]
+        capture.send(:notify_audio_data, test_data)
+
+        expect(callback_called).to be true
+      end
+
+      it "provides enhanced device information" do
+        base_capture = CliVisualizer::Audio::Capture.new
+        base_info = base_capture.device_info
+        linux_info = capture.device_info
+
+        # Should have all base properties plus Linux-specific ones
+        expect(linux_info[:name]).not_to eq(base_info[:name])
+        expect(linux_info[:platform]).to eq("Linux")
+        expect([nil, :pulseaudio, :alsa]).to include(linux_info[:audio_system])
+        expect(linux_info).to include(:sample_rate, :channels, :sample_size)
+      end
+    end
+
+    describe "audio system support" do
+      it "handles PulseAudio when available" do
+        capture.instance_variable_set(:@audio_system, :pulseaudio)
+        info = capture.device_info
+
+        expect(info[:framework]).to eq("PulseAudio")
+        expect(info[:audio_system]).to eq(:pulseaudio)
+      end
+
+      it "handles ALSA when available" do
+        capture.instance_variable_set(:@audio_system, :alsa)
+        info = capture.device_info
+
+        expect(info[:framework]).to eq("ALSA")
+        expect(info[:audio_system]).to eq(:alsa)
+      end
+
+      it "handles case when no audio system is available" do
+        capture.instance_variable_set(:@audio_system, nil)
+        info = capture.device_info
+
+        expect(info[:framework]).to be_nil
+        expect(info[:audio_system]).to be_nil
+      end
+    end
+
+    describe "audio format compatibility" do
+      it "handles standard CD quality format" do
+        cd_capture = described_class.new(sample_rate: 44_100, channels: 2, sample_size: 16)
+        info = cd_capture.device_info
+
+        expect(info[:sample_rate]).to eq(44_100)
+        expect(info[:channels]).to eq(2)
+        expect(info[:sample_size]).to eq(16)
+      end
+
+      it "handles high-quality audio format" do
+        hq_capture = described_class.new(sample_rate: 96_000, channels: 2, sample_size: 24)
+        info = hq_capture.device_info
+
+        expect(info[:sample_rate]).to eq(96_000)
+        expect(info[:channels]).to eq(2)
+        expect(info[:sample_size]).to eq(24)
+      end
+
+      it "handles mono audio format" do
+        mono_capture = described_class.new(sample_rate: 44_100, channels: 1, sample_size: 16)
+        info = mono_capture.device_info
+
+        expect(info[:channels]).to eq(1)
+      end
+    end
+
+    describe "resource management" do
+      it "initializes with clean state" do
+        expect(capture.instance_variable_get(:@pa_simple)).to be_nil
+        expect(capture.instance_variable_get(:@alsa_pcm)).to be_nil
+        expect(capture.instance_variable_get(:@capture_thread)).to be_nil
+        expect(capture.instance_variable_get(:@running)).to be false
+      end
+
+      it "clears all resources on cleanup" do
+        # Set up some mock state
+        capture.instance_variable_set(:@pa_simple, FFI::MemoryPointer.new(:pointer))
+        capture.instance_variable_set(:@alsa_pcm, FFI::MemoryPointer.new(:pointer))
+        capture.instance_variable_set(:@capture_thread, Thread.new { sleep })
+
+        # Mock the cleanup functions to avoid actual system calls
+        allow(CliVisualizer::Audio::LinuxCapture).to receive(:pa_simple_free)
+        allow(CliVisualizer::Audio::LinuxCapture).to receive(:snd_pcm_drop)
+        allow(CliVisualizer::Audio::LinuxCapture).to receive(:snd_pcm_close)
+
+        capture.send(:cleanup_audio)
+
+        expect(capture.instance_variable_get(:@pa_simple)).to be_nil
+        expect(capture.instance_variable_get(:@alsa_pcm)).to be_nil
       end
     end
   end

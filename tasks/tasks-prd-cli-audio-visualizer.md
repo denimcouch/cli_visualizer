@@ -78,7 +78,7 @@
 
   - [x] 2.1 Create audio capture abstraction layer in `lib/cli_visualizer/audio/capture.rb`
   - [x] 2.2 Implement macOS Core Audio integration using FFI
-  - [ ] 2.3 Implement Linux ALSA/PulseAudio integration using FFI
+  - [x] 2.3 Implement Linux ALSA/PulseAudio integration using FFI
   - [ ] 2.4 Build audio file player for MP3, WAV, FLAC support
   - [ ] 2.5 Implement FFT-based frequency analysis in audio processor
   - [ ] 2.6 Create audio buffer management for real-time processing
