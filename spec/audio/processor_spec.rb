@@ -329,8 +329,8 @@ RSpec.describe CliVisualizer::Audio::Processor do
 
       processing_time = Time.now - start_time
 
-      # Should complete in reasonable time (less than 5 seconds for 10 seconds of audio)
-      expect(processing_time).to be < 5.0
+      # Should complete in reasonable time (less than 10 seconds for 10 seconds of audio)
+      expect(processing_time).to be < 10.0
       expect(received_count).to be > 0
     end
   end

@@ -21,6 +21,9 @@ module CliVisualizer
     autoload :LinuxCapture, "cli_visualizer/audio/linux_capture"
     autoload :FilePlayer, "cli_visualizer/audio/file_player"
     autoload :Processor, "cli_visualizer/audio/processor"
+    autoload :Buffer, "cli_visualizer/audio/buffer"
+    autoload :BufferManager, "cli_visualizer/audio/buffer_manager"
+    autoload :SourceManager, "cli_visualizer/audio/source_manager"
   end
 
   # Visualization components

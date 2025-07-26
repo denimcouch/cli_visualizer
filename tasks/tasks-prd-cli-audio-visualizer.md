@@ -28,10 +28,17 @@
 - `spec/audio/file_player_spec.rb` - Audio file player tests (✅ CREATED)
 - `spec/audio/file_player_integration_spec.rb` - Audio file player integration tests (✅ CREATED)
 - `spec/audio/processor_spec.rb` - Audio processor and FFT analysis tests (✅ CREATED)
+- `spec/audio/buffer_spec.rb` - Audio buffer tests (27 examples) (✅ CREATED)
+- `spec/audio/buffer_manager_spec.rb` - Buffer manager and routing tests (34 examples) (✅ CREATED)
+- `spec/audio/source_manager_spec.rb` - Source manager tests (35 examples) (✅ CREATED)
+- `spec/audio/source_manager_integration_spec.rb` - Complete pipeline integration tests (9 examples) (✅ CREATED)
 - `lib/cli_visualizer/audio/macos_capture.rb` - macOS-specific audio capture using Core Audio
 - `lib/cli_visualizer/audio/linux_capture.rb` - Linux-specific audio capture using ALSA/PulseAudio
 - `lib/cli_visualizer/audio/file_player.rb` - Audio file playback functionality (✅ CREATED)
 - `lib/cli_visualizer/audio/processor.rb` - Audio signal processing (FFT, frequency analysis) (✅ CREATED)
+- `lib/cli_visualizer/audio/buffer.rb` - Thread-safe circular audio buffer (✅ CREATED)
+- `lib/cli_visualizer/audio/buffer_manager.rb` - Multi-buffer management and routing (✅ CREATED)
+- `lib/cli_visualizer/audio/source_manager.rb` - Audio source switching and coordination (✅ CREATED)
 - `lib/cli_visualizer/visualizer/base.rb` - Base class for all visualization modes
 - `lib/cli_visualizer/visualizer/spectrum.rb` - Frequency spectrum bar visualization
 - `lib/cli_visualizer/visualizer/waveform.rb` - Waveform pattern visualization
@@ -84,8 +91,8 @@
   - [x] 2.3 Implement Linux ALSA/PulseAudio integration using FFI
   - [x] 2.4 Build audio file player for MP3, WAV, FLAC support
   - [x] 2.5 Implement FFT-based frequency analysis in audio processor
-  - [ ] 2.6 Create audio buffer management for real-time processing
-  - [ ] 2.7 Add audio source switching mechanism (system vs file)
+  - [x] 2.6 Create audio buffer management for real-time processing
+  - [x] 2.7 Add audio source switching mechanism (system vs file)
   - [ ] 2.8 Implement audio sensitivity and gain controls
   - [ ] 2.9 Add comprehensive tests for audio capture and processing
 
