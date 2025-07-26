@@ -22,8 +22,9 @@
 - `spec/config/` - Directory for configuration management tests (✅ CREATED)
 - `spec/platform/` - Directory for platform detection tests (✅ CREATED)
 - `spec/fixtures/` - Directory for test data and fixtures (✅ CREATED)
-- `lib/cli_visualizer/application.rb` - Main application controller and orchestration
-- `lib/cli_visualizer/audio/capture.rb` - Audio capture abstraction layer
+- `lib/cli_visualizer/application.rb` - Main application controller and orchestration (✅ ENHANCED)
+- `lib/cli_visualizer/audio/capture.rb` - Audio capture abstraction layer (✅ CREATED)
+- `spec/audio/capture_spec.rb` - Audio capture abstraction tests (✅ CREATED)
 - `lib/cli_visualizer/audio/macos_capture.rb` - macOS-specific audio capture using Core Audio
 - `lib/cli_visualizer/audio/linux_capture.rb` - Linux-specific audio capture using ALSA/PulseAudio
 - `lib/cli_visualizer/audio/file_player.rb` - Audio file playback functionality
@@ -75,7 +76,7 @@
 
 - [ ] 2.0 Audio Capture and Processing System
 
-  - [ ] 2.1 Create audio capture abstraction layer in `lib/cli_visualizer/audio/capture.rb`
+  - [x] 2.1 Create audio capture abstraction layer in `lib/cli_visualizer/audio/capture.rb`
   - [ ] 2.2 Implement macOS Core Audio integration using FFI
   - [ ] 2.3 Implement Linux ALSA/PulseAudio integration using FFI
   - [ ] 2.4 Build audio file player for MP3, WAV, FLAC support
