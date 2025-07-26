@@ -1,0 +1,16 @@
+---
+description: When committing changes into git or the user asks for you to generate a commit message
+alwaysApply: false
+---
+# Rule: Writing commit messages  
+
+## Goal  
+
+To guide an AI assistant in writing meaningful and concise commit messages.
+
+## Guidelines  
+
+1. Messages should be no longer than 120 characters.
+2. Message content should contain only the most important changes.
+3. Message content does not need to include the agent's thought process.
+4. Utilize gitmoji for a touch of flair and description.
