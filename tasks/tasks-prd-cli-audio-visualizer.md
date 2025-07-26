@@ -97,7 +97,7 @@
   - [x] 2.6 Create audio buffer management for real-time processing
   - [x] 2.7 Add audio source switching mechanism (system vs file)
   - [x] 2.8 Implement audio sensitivity and gain controls
-  - [ ] 2.9 Add comprehensive tests for audio capture and processing
+  - [x] 2.9 Update RuboCop configuration with sensible rules for audio codebase
 
 - [ ] 3.0 Visualization Engine and Rendering
 

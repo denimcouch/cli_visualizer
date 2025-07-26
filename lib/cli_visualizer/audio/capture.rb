@@ -4,7 +4,6 @@ module CliVisualizer
   module Audio
     # Abstract base class for all audio capture implementations
     # Defines the common interface for system audio capture and file playback
-    # rubocop:disable Metrics/ClassLength
     class Capture
       # Audio format configuration
       SAMPLE_RATE = 44_100    # Standard CD quality
@@ -146,7 +145,6 @@ module CliVisualizer
           FilePlayer.new(**options)
         end
       end
-      # rubocop:enable Metrics/ClassLength
     end
   end
 end

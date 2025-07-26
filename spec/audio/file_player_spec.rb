@@ -275,7 +275,7 @@ RSpec.describe CliVisualizer::Audio::FilePlayer do
 
   def cleanup_test_audio_files
     [sample_wav_file, sample_mp3_file, sample_flac_file].each do |file|
-      File.delete(file) if File.exist?(file)
+      FileUtils.rm_f(file)
     end
   end
 

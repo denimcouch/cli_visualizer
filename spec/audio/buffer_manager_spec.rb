@@ -383,7 +383,7 @@ RSpec.describe CliVisualizer::Audio::BufferManager do
     it "handles multiple producers to single consumer" do
       producer1 = manager.create_source("prod1")
       producer2 = manager.create_source("prod2")
-      consumer = manager.create_consumer("mixer")
+      manager.create_consumer("mixer")
 
       mixed_data = []
 
@@ -413,7 +413,7 @@ RSpec.describe CliVisualizer::Audio::BufferManager do
       3.times do |writer_id|
         threads << Thread.new do
           100.times do |i|
-            samples = [writer_id * 100 + i].map(&:to_f)
+            samples = [(writer_id * 100) + i].map(&:to_f)
             manager.write_to_buffer("shared", samples)
             sleep(0.001)
           end

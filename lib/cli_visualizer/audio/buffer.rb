@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "thread"
-
 module CliVisualizer
   module Audio
     # Thread-safe circular buffer for real-time audio processing
@@ -82,7 +80,7 @@ module CliVisualizer
           end
 
           @last_write_time = Time.now
-          @not_empty.signal if @size > 0
+          @not_empty.signal if @size.positive?
           update_status
 
           samples_written
@@ -103,7 +101,7 @@ module CliVisualizer
             break if timeout && (Time.now - start_time) > timeout
 
             # Wait for data if buffer is empty
-            while @size == 0
+            while @size.zero?
               if timeout
                 remaining_time = timeout - (Time.now - start_time)
                 break if remaining_time <= 0
@@ -117,7 +115,7 @@ module CliVisualizer
             end
 
             # Read sample if available
-            break unless @size > 0
+            break unless @size.positive?
 
             sample = @buffer[@read_pos]
             @read_pos = (@read_pos + 1) % @capacity
@@ -139,7 +137,7 @@ module CliVisualizer
       # Peek at samples without removing them from buffer
       def peek(count)
         @mutex.synchronize do
-          return [] if @size == 0 || count <= 0
+          return [] if @size.zero? || count <= 0
 
           available = [@size, count].min
           samples = []
@@ -160,7 +158,7 @@ module CliVisualizer
 
       # Check if buffer is empty
       def empty?
-        @mutex.synchronize { @size == 0 }
+        @mutex.synchronize { @size.zero? }
       end
 
       # Check if buffer is full
@@ -246,7 +244,7 @@ module CliVisualizer
 
         # Drop oldest sample to make room
         @read_pos = (@read_pos + 1) % @capacity
-        @size -= 1 if @size > 0
+        @size -= 1 if @size.positive?
       end
 
       # Handle buffer underrun condition
@@ -257,9 +255,9 @@ module CliVisualizer
 
       # Update buffer health status
       def update_status
-        @status = if @overrun_count > 0 && (Time.now - @last_write_time) < 0.1
+        @status = if @overrun_count.positive? && (Time.now - @last_write_time) < 0.1
                     STATUS_OVERRUN
-                  elsif @underrun_count > 0 && (Time.now - @last_read_time) < 0.1
+                  elsif @underrun_count.positive? && (Time.now - @last_read_time) < 0.1
                     STATUS_UNDERRUN
                   else
                     STATUS_HEALTHY
@@ -269,7 +267,7 @@ module CliVisualizer
       # Calculate approximate write rate (samples/second)
       def calculate_write_rate
         time_elapsed = Time.now - @last_write_time
-        return 0.0 if time_elapsed <= 0 || @total_written == 0
+        return 0.0 if time_elapsed <= 0 || @total_written.zero?
 
         # Estimate based on recent activity
         @sample_rate.to_f # Approximate, would need more sophisticated tracking
@@ -278,7 +276,7 @@ module CliVisualizer
       # Calculate approximate read rate (samples/second)
       def calculate_read_rate
         time_elapsed = Time.now - @last_read_time
-        return 0.0 if time_elapsed <= 0 || @total_read == 0
+        return 0.0 if time_elapsed <= 0 || @total_read.zero?
 
         # Estimate based on recent activity
         @sample_rate.to_f # Approximate, would need more sophisticated tracking

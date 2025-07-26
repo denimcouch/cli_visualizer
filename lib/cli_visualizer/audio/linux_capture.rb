@@ -6,7 +6,6 @@ module CliVisualizer
   module Audio
     # Linux-specific audio capture implementation using PulseAudio and ALSA APIs
     # Uses FFI to interface with PulseAudio (preferred) and ALSA (fallback) libraries
-    # rubocop:disable Metrics/ClassLength
     class LinuxCapture < Capture
       extend FFI::Library
 
@@ -104,7 +103,7 @@ module CliVisualizer
       end
 
       def initialize(**options)
-        super(**options)
+        super
         @audio_system = nil # :pulseaudio or :alsa
         @pa_simple = nil
         @alsa_pcm = nil
@@ -113,7 +112,6 @@ module CliVisualizer
         detect_audio_system
       end
 
-      # rubocop:disable Metrics/MethodLength
       def start
         return false if running?
 
@@ -140,9 +138,7 @@ module CliVisualizer
           false
         end
       end
-      # rubocop:enable Metrics/MethodLength
 
-      # rubocop:disable Metrics/MethodLength
       def stop
         return true if stopped?
 
@@ -160,7 +156,6 @@ module CliVisualizer
           false
         end
       end
-      # rubocop:enable Metrics/MethodLength
 
       def pause
         # For simplicity, pause is implemented as stop on Linux
@@ -172,7 +167,6 @@ module CliVisualizer
         start
       end
 
-      # rubocop:disable Metrics/MethodLength
       def device_info
         {
           name: "Linux #{@audio_system&.to_s&.capitalize || "Unknown"} Audio",
@@ -187,9 +181,7 @@ module CliVisualizer
                      end
         }
       end
-      # rubocop:enable Metrics/MethodLength
 
-      # rubocop:disable Metrics/MethodLength
       def self.available_devices
         devices = []
 
@@ -214,7 +206,6 @@ module CliVisualizer
 
         devices
       end
-      # rubocop:enable Metrics/MethodLength
 
       private
 
@@ -227,7 +218,6 @@ module CliVisualizer
                         end
       end
 
-      # rubocop:disable Metrics/MethodLength
       def pulseaudio_available?
         return false unless respond_to?(:pa_simple_new)
 
@@ -250,9 +240,7 @@ module CliVisualizer
       rescue StandardError
         false
       end
-      # rubocop:enable Metrics/MethodLength
 
-      # rubocop:disable Metrics/MethodLength
       def alsa_available?
         return false unless respond_to?(:snd_pcm_open)
 
@@ -270,9 +258,7 @@ module CliVisualizer
       rescue StandardError
         false
       end
-      # rubocop:enable Metrics/MethodLength
 
-      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def start_pulseaudio
         sample_spec = PaSampleSpec.new
         sample_spec[:format] = case @sample_size
@@ -304,9 +290,7 @@ module CliVisualizer
         error_msg = pa_strerror(error_code)
         raise AudioError, "Failed to create PulseAudio stream: #{error_msg}"
       end
-      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
-      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def start_alsa
         pcm_ptr = FFI::MemoryPointer.new(:pointer)
         result = snd_pcm_open(pcm_ptr, "default", SND_PCM_STREAM_CAPTURE, 0)
@@ -338,7 +322,6 @@ module CliVisualizer
         snd_pcm_close(@alsa_pcm)
         raise AudioError, "Failed to prepare ALSA device: #{snd_strerror(result)}"
       end
-      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
       def start_capture_thread
         @capture_thread = Thread.new do
@@ -410,8 +393,8 @@ module CliVisualizer
           sample_count.times do |i|
             # 24-bit samples are stored in 3 bytes, convert to 16-bit
             byte1 = buffer.get_uint8(i * 3)
-            byte2 = buffer.get_uint8(i * 3 + 1)
-            byte3 = buffer.get_uint8(i * 3 + 2)
+            byte2 = buffer.get_uint8((i * 3) + 1)
+            byte3 = buffer.get_uint8((i * 3) + 2)
             sample_24 = (byte3 << 16) | (byte2 << 8) | byte1
             # Convert to signed and scale down to 16-bit
             sample_24 -= 0x800000 if sample_24 >= 0x800000
@@ -435,8 +418,6 @@ module CliVisualizer
       end
       # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Naming/VariableNumber
 
-      # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
-      # rubocop:disable Metrics/PerceivedComplexity
       def cleanup_audio
         if @pa_simple && !@pa_simple.null?
           begin
@@ -462,9 +443,6 @@ module CliVisualizer
         # Log error but don't raise - cleanup should be resilient
         warn "Error during Linux audio cleanup: #{e.message}"
       end
-      # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
-      # rubocop:enable Metrics/PerceivedComplexity
     end
-    # rubocop:enable Metrics/ClassLength
   end
 end

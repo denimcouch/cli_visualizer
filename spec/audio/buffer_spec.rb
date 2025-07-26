@@ -123,7 +123,7 @@ RSpec.describe CliVisualizer::Audio::Buffer do
 
       # Try to write more - should trigger overrun
       additional_samples = [0.1, 0.2, 0.3]
-      written = buffer.write(additional_samples)
+      buffer.write(additional_samples)
 
       expect(buffer.overrun_count).to be > 0
       expect(buffer.status).to eq(described_class::STATUS_OVERRUN)
@@ -225,7 +225,7 @@ RSpec.describe CliVisualizer::Audio::Buffer do
       # Multiple writer threads
       writers = 3.times.map do |thread_id|
         Thread.new do
-          test_data.each { |sample| buffer.write([sample + thread_id * 1000]) }
+          test_data.each { |sample| buffer.write([sample + (thread_id * 1000)]) }
         end
       end
 

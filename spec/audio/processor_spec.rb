@@ -63,7 +63,7 @@ RSpec.describe CliVisualizer::Audio::Processor do
   describe "#frequency_bins" do
     it "generates correct frequency bins" do
       bins = processor.frequency_bins
-      expect(bins.length).to eq(fft_size / 2 + 1)
+      expect(bins.length).to eq((fft_size / 2) + 1)
       expect(bins.first).to eq(0.0)
       expect(bins.last).to be_within(0.1).of(sample_rate / 2.0)
     end
@@ -88,7 +88,7 @@ RSpec.describe CliVisualizer::Audio::Processor do
 
   describe "#magnitude_bins_count" do
     it "returns correct magnitude bins count" do
-      expect(processor.magnitude_bins_count).to eq(fft_size / 2 + 1)
+      expect(processor.magnitude_bins_count).to eq((fft_size / 2) + 1)
     end
   end
 
@@ -204,9 +204,9 @@ RSpec.describe CliVisualizer::Audio::Processor do
       expect(frequency_data).to have_key(:sample_rate)
       expect(frequency_data).to have_key(:fft_size)
 
-      expect(frequency_data[:frequencies].length).to eq(fft_size / 2 + 1)
-      expect(frequency_data[:magnitudes].length).to eq(fft_size / 2 + 1)
-      expect(frequency_data[:phases].length).to eq(fft_size / 2 + 1)
+      expect(frequency_data[:frequencies].length).to eq((fft_size / 2) + 1)
+      expect(frequency_data[:magnitudes].length).to eq((fft_size / 2) + 1)
+      expect(frequency_data[:phases].length).to eq((fft_size / 2) + 1)
     end
 
     it "detects correct frequency peaks" do

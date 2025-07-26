@@ -317,8 +317,8 @@ RSpec.describe CliVisualizer::Audio::Controls, :integration do
 
       control_thread = Thread.new do
         20.times do |i|
-          controls.set_gain(0.1 + (i % 10) * 0.2)
-          controls.set_sensitivity(0.5 + (i % 5) * 0.3)
+          controls.set_gain(0.1 + ((i % 10) * 0.2))
+          controls.set_sensitivity(0.5 + ((i % 5) * 0.3))
 
           # Toggle features
           controls.enable_agc(i.even?)
@@ -348,7 +348,7 @@ RSpec.describe CliVisualizer::Audio::Controls, :integration do
   end
 
   def cleanup_temp_file(temp_file)
-    temp_file.unlink if temp_file
+    temp_file&.unlink
   rescue StandardError
     # Ignore cleanup errors
   end
@@ -361,8 +361,8 @@ RSpec.describe CliVisualizer::Audio::Controls, :integration do
     Array.new(count) do |i|
       # Complex waveform simulating music
       fundamental = 0.3 * Math.sin(2 * Math::PI * i / 200.0)
-      harmonics = 0.1 * Math.sin(2 * Math::PI * i / 100.0) + 0.05 * Math.sin(2 * Math::PI * i / 67.0)
-      dynamics = 0.5 + 0.4 * Math.sin(2 * Math::PI * i / 1000.0)
+      harmonics = (0.1 * Math.sin(2 * Math::PI * i / 100.0)) + (0.05 * Math.sin(2 * Math::PI * i / 67.0))
+      dynamics = 0.5 + (0.4 * Math.sin(2 * Math::PI * i / 1000.0))
 
       (fundamental + harmonics) * dynamics
     end
@@ -371,10 +371,10 @@ RSpec.describe CliVisualizer::Audio::Controls, :integration do
   def generate_speech_like_samples(count)
     Array.new(count) do |i|
       # Simulated speech patterns with formants
-      base_freq = 100 + 50 * Math.sin(2 * Math::PI * i / 500.0)
+      base_freq = 100 + (50 * Math.sin(2 * Math::PI * i / 500.0))
       formant1 = 0.4 * Math.sin(2 * Math::PI * i * base_freq / 44_100.0)
       formant2 = 0.2 * Math.sin(2 * Math::PI * i * base_freq * 2.5 / 44_100.0)
-      envelope = 0.3 + 0.5 * Math.sin(2 * Math::PI * i / 200.0).abs
+      envelope = 0.3 + (0.5 * Math.sin(2 * Math::PI * i / 200.0).abs)
 
       (formant1 + formant2) * envelope
     end

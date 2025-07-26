@@ -396,7 +396,7 @@ module CliVisualizer
         current_rms = calculate_rms(samples)
 
         @statistics[:peak_level] = [@statistics[:peak_level], current_peak].max
-        @statistics[:rms_level] = 0.9 * @statistics[:rms_level] + 0.1 * current_rms
+        @statistics[:rms_level] = (0.9 * @statistics[:rms_level]) + (0.1 * current_rms)
       end
 
       def notify_level_callbacks(samples)

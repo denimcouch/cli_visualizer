@@ -565,8 +565,8 @@ RSpec.describe CliVisualizer::Audio::Controls do
 
       control_thread = Thread.new do
         10.times do |i|
-          controls.set_gain(1.0 + i * 0.1)
-          controls.set_sensitivity(1.0 + i * 0.1)
+          controls.set_gain(1.0 + (i * 0.1))
+          controls.set_sensitivity(1.0 + (i * 0.1))
           sleep(0.001)
         end
       end
@@ -608,7 +608,7 @@ RSpec.describe CliVisualizer::Audio::Controls do
       # Simulate typical music file samples
       music_samples = Array.new(1000) do |i|
         # Sine wave with some dynamics
-        amplitude = 0.3 + 0.4 * Math.sin(i / 100.0)
+        amplitude = 0.3 + (0.4 * Math.sin(i / 100.0))
         amplitude * Math.sin(2 * Math::PI * i / 44.1)
       end
 

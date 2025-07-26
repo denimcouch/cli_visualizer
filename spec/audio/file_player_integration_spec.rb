@@ -176,7 +176,7 @@ RSpec.describe CliVisualizer::Audio::FilePlayer, :integration do
 
       # WAV header
       f.write("RIFF")
-      f.write([36 + samples * channels * (bits_per_sample / 8)].pack("L<"))
+      f.write([36 + (samples * channels * (bits_per_sample / 8))].pack("L<"))
       f.write("WAVE")
       f.write("fmt ")
       f.write([16].pack("L<")) # fmt chunk size
@@ -201,6 +201,6 @@ RSpec.describe CliVisualizer::Audio::FilePlayer, :integration do
   end
 
   def cleanup_test_file(file_path)
-    File.delete(file_path) if File.exist?(file_path)
+    FileUtils.rm_f(file_path)
   end
 end

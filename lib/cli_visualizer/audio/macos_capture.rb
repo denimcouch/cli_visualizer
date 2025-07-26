@@ -6,7 +6,6 @@ module CliVisualizer
   module Audio
     # macOS-specific audio capture implementation using Core Audio APIs
     # Uses FFI to interface with AudioToolbox, CoreAudio, and AudioUnit frameworks
-    # rubocop:disable Metrics/ClassLength
     class MacOSCapture < Capture
       extend FFI::Library
 
@@ -115,7 +114,7 @@ module CliVisualizer
       end
 
       def initialize(**options)
-        super(**options)
+        super
         @audio_unit = nil
         @capture_thread = nil
         @render_callback = nil
@@ -123,7 +122,6 @@ module CliVisualizer
         setup_audio_format
       end
 
-      # rubocop:disable Metrics/MethodLength
       def start
         return false if running?
 
@@ -148,9 +146,7 @@ module CliVisualizer
           false
         end
       end
-      # rubocop:enable Metrics/MethodLength
 
-      # rubocop:disable Metrics/MethodLength
       def stop
         return true if stopped?
 
@@ -169,7 +165,6 @@ module CliVisualizer
           false
         end
       end
-      # rubocop:enable Metrics/MethodLength
 
       def pause
         # For simplicity, pause is implemented as stop on macOS
@@ -208,7 +203,6 @@ module CliVisualizer
 
       private
 
-      # rubocop:disable Metrics/AbcSize
       def setup_audio_format
         @audio_format = AudioStreamBasicDescription.new
         @audio_format[:sample_rate] = @sample_rate.to_f
@@ -221,9 +215,7 @@ module CliVisualizer
         @audio_format[:bits_per_channel] = @sample_size
         @audio_format[:reserved] = 0
       end
-      # rubocop:enable Metrics/AbcSize
 
-      # rubocop:disable Metrics/MethodLength
       def setup_audio_unit
         # Create component description for HAL output unit
         desc = AudioComponentDescription.new
@@ -244,15 +236,12 @@ module CliVisualizer
 
         @audio_unit = audio_unit_ptr.read_pointer
       end
-      # rubocop:enable Metrics/MethodLength
 
-      # rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
       def setup_render_callback
         # Create render callback that will be called for audio data
         @render_callback = FFI::Function.new(:OSStatus,
                                              %i[pointer pointer pointer uint32 uint32
-                                                pointer]) do |ref_con, action_flags, time_stamp,
-                                                              bus_number, frame_count, data|
+                                                pointer]) do |ref_con, action_flags, time_stamp, bus_number, frame_count, data|
           handle_audio_callback(ref_con, action_flags, time_stamp, bus_number, frame_count, data)
         end
 
@@ -270,9 +259,7 @@ module CliVisualizer
                                       callback_struct.size)
         raise AudioError, "Failed to set render callback: #{result}" if result != NO_ERR
       end
-      # rubocop:enable Metrics/MethodLength, Metrics/ParameterLists
 
-      # rubocop:disable Metrics/MethodLength
       def configure_audio_unit
         # Enable input on the audio unit
         enable_io = FFI::MemoryPointer.new(:uint32)
@@ -298,9 +285,8 @@ module CliVisualizer
         result = AudioUnitInitialize(@audio_unit)
         raise AudioError, "Failed to initialize audio unit: #{result}" if result != NO_ERR
       end
-      # rubocop:enable Metrics/MethodLength
 
-      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/ParameterLists
+      # rubocop:disable Metrics/AbcSize
       def handle_audio_callback(_ref_con, _action_flags, _time_stamp, _bus_number, frame_count, _data)
         return NO_ERR unless running?
 
@@ -334,11 +320,10 @@ module CliVisualizer
           -1 # Return error code
         end
       end
-      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/ParameterLists
+      # rubocop:enable Metrics/AbcSize
 
       # Temporary method to generate test audio data
       # In a real implementation, this would be replaced with actual Core Audio capture
-      # rubocop:disable Metrics/MethodLength
       def generate_test_audio_data(frame_count)
         # Generate a simple sine wave for testing
         @phase ||= 0.0
@@ -355,9 +340,7 @@ module CliVisualizer
 
         audio_data
       end
-      # rubocop:enable Metrics/MethodLength
 
-      # rubocop:disable Metrics/MethodLength
       def cleanup_audio_unit
         return unless @audio_unit
 
@@ -373,8 +356,6 @@ module CliVisualizer
           @render_callback = nil
         end
       end
-      # rubocop:enable Metrics/MethodLength
     end
-    # rubocop:enable Metrics/ClassLength
   end
 end

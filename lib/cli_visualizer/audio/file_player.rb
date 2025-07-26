@@ -6,7 +6,6 @@ module CliVisualizer
   module Audio
     # File-based audio player for MP3, WAV, and FLAC formats
     # Uses system tools (ffmpeg/sox) for decoding and provides audio data via callbacks
-    # rubocop:disable Metrics/ClassLength
     class FilePlayer < Capture
       # Supported audio file formats
       SUPPORTED_FORMATS = %w[.mp3 .wav .flac .m4a .aac .ogg].freeze
@@ -28,7 +27,6 @@ module CliVisualizer
       end
 
       # Start playing the audio file
-      # rubocop:disable Metrics/MethodLength
       def start
         return false if running? || error?
 
@@ -45,7 +43,6 @@ module CliVisualizer
           false
         end
       end
-      # rubocop:enable Metrics/MethodLength
 
       # Stop audio playback
       def stop
@@ -185,7 +182,7 @@ module CliVisualizer
       end
 
       # Main decoding and streaming loop
-      # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def decode_and_stream
         decoder_cmd = build_decoder_command
 
@@ -231,7 +228,7 @@ module CliVisualizer
       ensure
         self.status = STATUS_STOPPED unless error?
       end
-      # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
       # Build the appropriate decoder command
       def build_decoder_command
@@ -263,7 +260,6 @@ module CliVisualizer
       end
 
       # Build sox command for decoding
-      # rubocop:disable Metrics/MethodLength
       def build_sox_command
         cmd = ["sox", @file_path]
 
@@ -282,7 +278,6 @@ module CliVisualizer
 
         cmd
       end
-      # rubocop:enable Metrics/MethodLength
 
       # Convert raw PCM bytes to sample array
       def convert_pcm_to_samples(pcm_data)
@@ -295,6 +290,5 @@ module CliVisualizer
         []
       end
     end
-    # rubocop:enable Metrics/ClassLength
   end
 end

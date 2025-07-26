@@ -25,7 +25,7 @@ module CliVisualizer
         @overlap = overlap
         @window_type = window
 
-                validate_parameters!
+        validate_parameters!
 
         # Pre-computed values for efficiency (needed for window generation)
         @two_pi = 2.0 * Math::PI
@@ -70,7 +70,7 @@ module CliVisualizer
           notify_frequency_callbacks(frequency_data)
 
           # Advance buffer by hop size
-          @audio_buffer = @audio_buffer[@hop_size..-1] || []
+          @audio_buffer = @audio_buffer[@hop_size..] || []
         end
       end
 
@@ -91,7 +91,7 @@ module CliVisualizer
 
       # Get magnitude spectrum bins up to Nyquist frequency
       def magnitude_bins_count
-        @fft_size / 2 + 1
+        (@fft_size / 2) + 1
       end
 
       private
@@ -108,7 +108,7 @@ module CliVisualizer
 
         raise ArgumentError, "Overlap must be between 0.0 and 1.0 (exclusive)" unless @overlap >= 0.0 && @overlap < 1.0
 
-        return if @sample_rate > 0
+        return if @sample_rate.positive?
 
         raise ArgumentError, "Sample rate must be positive"
       end
@@ -139,15 +139,15 @@ module CliVisualizer
       # Generate Hamming window coefficients
       def generate_hamming_window(size)
         (0...size).map do |n|
-          0.54 - 0.46 * Math.cos(@two_pi * n / (size - 1))
+          0.54 - (0.46 * Math.cos(@two_pi * n / (size - 1)))
         end
       end
 
       # Generate Blackman window coefficients
       def generate_blackman_window(size)
         (0...size).map do |n|
-          0.42 - 0.5 * Math.cos(@two_pi * n / (size - 1)) +
-            0.08 * Math.cos(4.0 * Math::PI * n / (size - 1))
+          0.42 - (0.5 * Math.cos(@two_pi * n / (size - 1))) +
+            (0.08 * Math.cos(4.0 * Math::PI * n / (size - 1)))
         end
       end
 
@@ -174,7 +174,7 @@ module CliVisualizer
           real = complex_spectrum[i][:real]
           imag = complex_spectrum[i][:imag]
 
-          magnitude = Math.sqrt(real * real + imag * imag)
+          magnitude = Math.sqrt((real * real) + (imag * imag))
           phase = Math.atan2(imag, real)
 
           magnitudes << magnitude
@@ -207,7 +207,7 @@ module CliVisualizer
         return [{ real: samples[0], imag: 0.0 }] if n == 1
 
         # Ensure input size is power of 2
-        raise ArgumentError, "FFT size must be a power of 2" unless n.positive? && (n & (n - 1)).zero?
+        raise ArgumentError, "FFT size must be a power of 2" unless n.positive? && n.nobits?((n - 1))
 
         # Divide: separate even and odd samples
         even_samples = []
@@ -239,8 +239,8 @@ module CliVisualizer
           odd_real = odd_fft[k][:real]
           odd_imag = odd_fft[k][:imag]
 
-          t_real = twiddle_real * odd_real - twiddle_imag * odd_imag
-          t_imag = twiddle_real * odd_imag + twiddle_imag * odd_real
+          t_real = (twiddle_real * odd_real) - (twiddle_imag * odd_imag)
+          t_imag = (twiddle_real * odd_imag) + (twiddle_imag * odd_real)
 
           # Combine even and odd results
           even_real = even_fft[k][:real]

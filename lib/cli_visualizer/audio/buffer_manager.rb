@@ -66,7 +66,7 @@ module CliVisualizer
         written = buffer.write(samples, **options)
 
         # Route data to consumers if configured
-        route_data(buffer_name, samples) if written > 0
+        route_data(buffer_name, samples) if written.positive?
 
         written
       end
@@ -201,7 +201,7 @@ module CliVisualizer
           stats[:status] != Buffer::STATUS_HEALTHY
         end
 
-        if unhealthy_count == 0
+        if unhealthy_count.zero?
           :healthy
         elsif unhealthy_count < buffer_stats.size / 2
           :degraded

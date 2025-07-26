@@ -303,7 +303,7 @@ module CliVisualizer
 
         begin
           # Fade out old source if requested and running
-          fade_out_source(old_source, fade_duration) if old_source&.running? && fade_duration > 0
+          fade_out_source(old_source, fade_duration) if old_source&.running? && fade_duration.positive?
 
           # Stop old source
           old_source&.stop
@@ -317,7 +317,7 @@ module CliVisualizer
           # Start new source if manager is supposed to be running
           if running? || @state == STATE_SWITCHING
             success = new_source.start
-            fade_in_source(new_source, fade_duration) if success && fade_duration > 0
+            fade_in_source(new_source, fade_duration) if success && fade_duration.positive?
             success
           else
             true # Switch successful, but don't start yet

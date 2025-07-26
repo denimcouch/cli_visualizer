@@ -453,7 +453,7 @@ RSpec.describe CliVisualizer::Audio::SourceManager do
   end
 
   def cleanup_temp_file(temp_file)
-    temp_file.unlink if temp_file
+    temp_file&.unlink
   rescue StandardError
     # Ignore cleanup errors
   end
