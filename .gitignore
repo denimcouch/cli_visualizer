@@ -1,8 +1,11 @@
-.env
-.env.*
+/.bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
 
-node_modules
-
-.DS_Store
-
-.cursor/
+# rspec failure tracking
+.rspec_status
