@@ -32,6 +32,8 @@
 - `spec/audio/buffer_manager_spec.rb` - Buffer manager and routing tests (34 examples) (✅ CREATED)
 - `spec/audio/source_manager_spec.rb` - Source manager tests (35 examples) (✅ CREATED)
 - `spec/audio/source_manager_integration_spec.rb` - Complete pipeline integration tests (9 examples) (✅ CREATED)
+- `spec/audio/controls_spec.rb` - Audio controls tests (61 examples) (✅ CREATED)
+- `spec/audio/controls_integration_spec.rb` - Controls pipeline integration tests (9 examples) (✅ CREATED)
 - `lib/cli_visualizer/audio/macos_capture.rb` - macOS-specific audio capture using Core Audio
 - `lib/cli_visualizer/audio/linux_capture.rb` - Linux-specific audio capture using ALSA/PulseAudio
 - `lib/cli_visualizer/audio/file_player.rb` - Audio file playback functionality (✅ CREATED)
@@ -39,6 +41,7 @@
 - `lib/cli_visualizer/audio/buffer.rb` - Thread-safe circular audio buffer (✅ CREATED)
 - `lib/cli_visualizer/audio/buffer_manager.rb` - Multi-buffer management and routing (✅ CREATED)
 - `lib/cli_visualizer/audio/source_manager.rb` - Audio source switching and coordination (✅ CREATED)
+- `lib/cli_visualizer/audio/controls.rb` - Audio gain, sensitivity, and processing controls (✅ CREATED)
 - `lib/cli_visualizer/visualizer/base.rb` - Base class for all visualization modes
 - `lib/cli_visualizer/visualizer/spectrum.rb` - Frequency spectrum bar visualization
 - `lib/cli_visualizer/visualizer/waveform.rb` - Waveform pattern visualization
@@ -93,7 +96,7 @@
   - [x] 2.5 Implement FFT-based frequency analysis in audio processor
   - [x] 2.6 Create audio buffer management for real-time processing
   - [x] 2.7 Add audio source switching mechanism (system vs file)
-  - [ ] 2.8 Implement audio sensitivity and gain controls
+  - [x] 2.8 Implement audio sensitivity and gain controls
   - [ ] 2.9 Add comprehensive tests for audio capture and processing
 
 - [ ] 3.0 Visualization Engine and Rendering

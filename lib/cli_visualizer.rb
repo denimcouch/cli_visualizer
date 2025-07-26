@@ -24,6 +24,7 @@ module CliVisualizer
     autoload :Buffer, "cli_visualizer/audio/buffer"
     autoload :BufferManager, "cli_visualizer/audio/buffer_manager"
     autoload :SourceManager, "cli_visualizer/audio/source_manager"
+    autoload :Controls, "cli_visualizer/audio/controls"
   end
 
   # Visualization components
