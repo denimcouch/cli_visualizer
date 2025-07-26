@@ -27,6 +27,20 @@ module CliVisualizer
     autoload :Controls, "cli_visualizer/audio/controls"
   end
 
+  # Visualization system components
+  module Visualizer
+    autoload :Base, "cli_visualizer/visualizer/base"
+    autoload :Spectrum, "cli_visualizer/visualizer/spectrum"
+    autoload :Waveform, "cli_visualizer/visualizer/waveform"
+    autoload :Abstract, "cli_visualizer/visualizer/abstract"
+  end
+
+  # Rendering system components
+  module Renderer
+    autoload :Terminal, "cli_visualizer/renderer/terminal"
+    autoload :Color, "cli_visualizer/renderer/color"
+  end
+
   # Visualization components
   module Visualizer
     autoload :Base, "cli_visualizer/visualizer/base"
