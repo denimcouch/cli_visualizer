@@ -22,12 +22,27 @@
 - `spec/config/` - Directory for configuration management tests (✅ CREATED)
 - `spec/platform/` - Directory for platform detection tests (✅ CREATED)
 - `spec/fixtures/` - Directory for test data and fixtures (✅ CREATED)
-- `lib/cli_visualizer/application.rb` - Main application controller and orchestration
-- `lib/cli_visualizer/audio/capture.rb` - Audio capture abstraction layer
+- `lib/cli_visualizer/application.rb` - Main application controller and orchestration (✅ ENHANCED)
+- `lib/cli_visualizer/audio/capture.rb` - Audio capture abstraction layer (✅ CREATED)
+- `spec/audio/capture_spec.rb` - Audio capture abstraction tests (✅ CREATED)
+- `spec/audio/file_player_spec.rb` - Audio file player tests (✅ CREATED)
+- `spec/audio/file_player_integration_spec.rb` - Audio file player integration tests (✅ CREATED)
+- `spec/audio/processor_spec.rb` - Audio processor and FFT analysis tests (✅ CREATED)
+- `spec/audio/buffer_spec.rb` - Audio buffer tests (27 examples) (✅ CREATED)
+- `spec/audio/buffer_manager_spec.rb` - Buffer manager and routing tests (34 examples) (✅ CREATED)
+- `spec/audio/source_manager_spec.rb` - Source manager tests (35 examples) (✅ CREATED)
+- `spec/audio/source_manager_integration_spec.rb` - Complete pipeline integration tests (9 examples) (✅ CREATED)
+- `spec/audio/controls_spec.rb` - Audio controls tests (61 examples) (✅ CREATED)
+- `spec/audio/controls_integration_spec.rb` - Controls pipeline integration tests (9 examples) (✅ CREATED)
+- `.rubocop.yml` - Comprehensive RuboCop configuration optimized for audio processing (✅ ENHANCED)
 - `lib/cli_visualizer/audio/macos_capture.rb` - macOS-specific audio capture using Core Audio
 - `lib/cli_visualizer/audio/linux_capture.rb` - Linux-specific audio capture using ALSA/PulseAudio
-- `lib/cli_visualizer/audio/file_player.rb` - Audio file playback functionality
-- `lib/cli_visualizer/audio/processor.rb` - Audio signal processing (FFT, frequency analysis)
+- `lib/cli_visualizer/audio/file_player.rb` - Audio file playback functionality (✅ CREATED)
+- `lib/cli_visualizer/audio/processor.rb` - Audio signal processing (FFT, frequency analysis) (✅ CREATED)
+- `lib/cli_visualizer/audio/buffer.rb` - Thread-safe circular audio buffer (✅ CREATED)
+- `lib/cli_visualizer/audio/buffer_manager.rb` - Multi-buffer management and routing (✅ CREATED)
+- `lib/cli_visualizer/audio/source_manager.rb` - Audio source switching and coordination (✅ CREATED)
+- `lib/cli_visualizer/audio/controls.rb` - Audio gain, sensitivity, and processing controls (✅ CREATED)
 - `lib/cli_visualizer/visualizer/base.rb` - Base class for all visualization modes
 - `lib/cli_visualizer/visualizer/spectrum.rb` - Frequency spectrum bar visualization
 - `lib/cli_visualizer/visualizer/waveform.rb` - Waveform pattern visualization
@@ -73,29 +88,29 @@
   - [x] 1.7 Create gemspec file with project metadata and dependencies
   - [x] 1.8 Set up github actions that run tests on every PR and push to main
 
-- [ ] 2.0 Audio Capture and Processing System
+- [x] 2.0 Audio Capture and Processing System
 
-  - [ ] 2.1 Create audio capture abstraction layer in `lib/cli_visualizer/audio/capture.rb`
-  - [ ] 2.2 Implement macOS Core Audio integration using FFI
-  - [ ] 2.3 Implement Linux ALSA/PulseAudio integration using FFI
-  - [ ] 2.4 Build audio file player for MP3, WAV, FLAC support
-  - [ ] 2.5 Implement FFT-based frequency analysis in audio processor
-  - [ ] 2.6 Create audio buffer management for real-time processing
-  - [ ] 2.7 Add audio source switching mechanism (system vs file)
-  - [ ] 2.8 Implement audio sensitivity and gain controls
-  - [ ] 2.9 Add comprehensive tests for audio capture and processing
+  - [x] 2.1 Create audio capture abstraction layer in `lib/cli_visualizer/audio/capture.rb`
+  - [x] 2.2 Implement macOS Core Audio integration using FFI
+  - [x] 2.3 Implement Linux ALSA/PulseAudio integration using FFI
+  - [x] 2.4 Build audio file player for MP3, WAV, FLAC support
+  - [x] 2.5 Implement FFT-based frequency analysis in audio processor
+  - [x] 2.6 Create audio buffer management for real-time processing
+  - [x] 2.7 Add audio source switching mechanism (system vs file)
+  - [x] 2.8 Implement audio sensitivity and gain controls
+  - [x] 2.9 Update RuboCop configuration with sensible rules for audio codebase
 
-- [ ] 3.0 Visualization Engine and Rendering
+- [x] 3.0 Visualization Engine and Rendering
 
-  - [ ] 3.1 Create base visualization class with common interface
-  - [ ] 3.2 Implement frequency spectrum bar visualizer (equalizer-style)
-  - [ ] 3.3 Build waveform pattern visualization engine
-  - [ ] 3.4 Create abstract artistic pattern generator
-  - [ ] 3.5 Develop terminal ASCII renderer with animation support
-  - [ ] 3.6 Add color support with terminal capability detection
-  - [ ] 3.7 Implement visualization scaling for different terminal sizes
-  - [ ] 3.8 Create ASCII character set options (basic vs extended)
-  - [ ] 3.9 Build mode switching system between visualization types
+  - [x] 3.1 Create base visualization class with common interface
+  - [x] 3.2 Implement frequency spectrum bar visualizer (equalizer-style)
+  - [x] 3.3 Build waveform pattern visualization engine
+  - [x] 3.4 Create abstract artistic pattern generator
+  - [x] 3.5 Develop terminal ASCII renderer with animation support
+  - [x] 3.6 Add color support with terminal capability detection
+  - [x] 3.7 Implement visualization scaling for different terminal sizes
+  - [x] 3.8 Create ASCII character set options (basic vs extended)
+  - [x] 3.9 Build mode switching system between visualization types
   - [ ] 3.10 Add comprehensive tests for all visualization modes
 
 - [ ] 4.0 User Interface and Controls

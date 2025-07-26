@@ -21,20 +21,27 @@ module CliVisualizer
     autoload :LinuxCapture, "cli_visualizer/audio/linux_capture"
     autoload :FilePlayer, "cli_visualizer/audio/file_player"
     autoload :Processor, "cli_visualizer/audio/processor"
+    autoload :Buffer, "cli_visualizer/audio/buffer"
+    autoload :BufferManager, "cli_visualizer/audio/buffer_manager"
+    autoload :SourceManager, "cli_visualizer/audio/source_manager"
+    autoload :Controls, "cli_visualizer/audio/controls"
   end
 
-  # Visualization components
+  # Visualization system components
   module Visualizer
     autoload :Base, "cli_visualizer/visualizer/base"
     autoload :Spectrum, "cli_visualizer/visualizer/spectrum"
     autoload :Waveform, "cli_visualizer/visualizer/waveform"
     autoload :Abstract, "cli_visualizer/visualizer/abstract"
+    autoload :ModeManager, "cli_visualizer/visualizer/mode_manager"
   end
 
-  # Rendering components
+  # Rendering system components
   module Renderer
     autoload :Terminal, "cli_visualizer/renderer/terminal"
     autoload :Color, "cli_visualizer/renderer/color"
+    autoload :Charset, "cli_visualizer/renderer/charset"
+    autoload :Scaler, "cli_visualizer/renderer/scaler"
   end
 
   # User interface components

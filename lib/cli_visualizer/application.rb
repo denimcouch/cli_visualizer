@@ -20,7 +20,6 @@ module CliVisualizer
 
     private
 
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def show_welcome
       puts "CLI Audio Visualizer v#{CliVisualizer.version}"
       puts
@@ -42,9 +41,7 @@ module CliVisualizer
       puts
       puts "Stay tuned for real audio visualizations! 🎶"
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
-    # rubocop:disable Metrics/MethodLength
     def show_help
       puts <<~HELP
         CLI Audio Visualizer v#{CliVisualizer.version}
@@ -75,6 +72,5 @@ module CliVisualizer
         https://github.com/denimcouch/cli_visualizer
       HELP
     end
-    # rubocop:enable Metrics/MethodLength
   end
 end

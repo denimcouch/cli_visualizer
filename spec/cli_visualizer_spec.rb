@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/BlockLength
 RSpec.describe CliVisualizer do
   describe "module structure" do
     it "has a version number" do
@@ -54,4 +53,3 @@ RSpec.describe CliVisualizer do
     end
   end
 end
-# rubocop:enable Metrics/BlockLength

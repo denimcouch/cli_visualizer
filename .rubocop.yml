@@ -1,8 +1,157 @@
+# RuboCop configuration for CLI Audio Visualizer
+# Optimized for audio processing domain with sensible limits
+
 AllCops:
   TargetRubyVersion: 3.1
+  NewCops: enable
+  SuggestExtensions: false  # We know about rubocop-rake and rubocop-rspec
+  Exclude:
+    - 'vendor/**/*'
+    - 'tmp/**/*'
+    - 'bin/*'
+    - 'exe/*'
 
+# ===== STRING LITERALS =====
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
+
+# ===== METRICS CONFIGURATION =====
+# Audio processing requires complex algorithms - adjust limits accordingly
+
+Metrics/ClassLength:
+  Max: 400 # Audio classes (Buffer, Processor, Controls) are inherently complex
+  Exclude:
+    - 'spec/**/*' # Test files can be long for comprehensive coverage
+
+Metrics/MethodLength:
+  Max: 25 # Audio processing methods (FFT, AGC, compression) need complexity
+  Exclude:
+    - 'spec/**/*' # Test methods can be longer for setup/verification
+
+Metrics/AbcSize:
+  Max: 30 # Audio algorithms have high assignment/branch/condition complexity
+
+Metrics/CyclomaticComplexity:
+  Max: 12 # Audio processing has inherent conditional complexity
+
+Metrics/PerceivedComplexity:
+  Max: 15 # Audio processing feels more complex than it is
+
+Metrics/ParameterLists:
+  Max: 8 # Audio controls need many configuration parameters
+  CountKeywordArgs: false # Don't count keyword arguments
+
+Metrics/BlockLength:
+  Max: 50 # Allow longer blocks for complex audio processing
+  Exclude:
+    - 'spec/**/*' # Test blocks can be very long
+    - 'Rakefile'
+    - '**/*.rake'
+
+# ===== STYLE CONFIGURATION =====
+
+Style/NumericPredicate:
+  EnforcedStyle: predicate # Use .positive?, .zero?, .negative?
+  AutoCorrect: true
+
+Style/OptionalBooleanParameter:
+  Enabled: true # Enforce keyword arguments for boolean defaults
+
+Style/SafeNavigation:
+  Enabled: true
+  ConvertCodeThatCanStartToReturnNil: true
+
+Style/SlicingWithRange:
+  Enabled: true
+  AutoCorrect: true
+
+# ===== NAMING CONFIGURATION =====
+
+Naming/AccessorMethodName:
+  Enabled: false # Allow set_* methods for audio controls (set_gain, set_sensitivity)
+
+Naming/BlockForwarding:
+  Enabled: true
+  EnforcedStyle: explicit
+
+# ===== LAYOUT CONFIGURATION =====
+
+Layout/LineLength:
+  Max: 130 # Audio processing often needs longer lines for clarity
+  Exclude:
+    - 'spec/**/*' # Test files often have long descriptive strings
+
+Layout/IndentationConsistency:
+  Enabled: true
+  AutoCorrect: true
+
+# ===== LINT CONFIGURATION =====
+
+Lint/FloatComparison:
+  Enabled: false # Audio processing requires precise float comparisons
+
+Lint/UselessAssignment:
+  Enabled: true
+  AutoCorrect: true
+
+Lint/RedundantRequireStatement:
+  Enabled: true
+  AutoCorrect: true
+
+# ===== AUDIO-SPECIFIC OVERRIDES =====
+
+# Disable cops that conflict with audio processing patterns
+Style/FrozenStringLiteralComment:
+  Enabled: false # Already handled by our templates
+
+# Allow complex audio processing patterns
+Style/GuardClause:
+  MinBodyLength: 5 # Audio processing often needs guard clauses
+
+Style/IfUnlessModifier:
+  Enabled: true
+
+# ===== SECURITY =====
+Security/CompoundHash:
+  Enabled: true
+
+Security/IoMethods:
+  Enabled: true
+
+# ===== GEMSPEC COPS =====
+Gemspec/RequireMFA:
+  Enabled: false # Not required for internal tools
+
+Gemspec/DevelopmentDependencies:
+  Enabled: true
+
+# ===== TEST-SPECIFIC CONFIGURATION =====
+# Note: RSpec cops require rubocop-rspec gem - configure separately if needed
+
+# ===== BUNDLER =====
+Bundler/OrderedGems:
+  Enabled: false # Allow logical grouping over alphabetical
+
+# ===== DISABLED COPS =====
+# These cops conflict with audio processing domain requirements
+
+Metrics/CollectionLiteralLength:
+  Enabled: false # Audio processing uses large constant arrays
+
+Style/Documentation:
+  Enabled: false # Code is self-documenting
+
+Style/ConstantVisibility:
+  Enabled: false # Audio constants are intentionally public
+
+Style/ClassVars:
+  Enabled: false # Some audio patterns benefit from class variables
+
+Style/GlobalVars:
+  Enabled: false # Audio libraries sometimes use globals
+
+# FFI-related overrides for audio system integration
+# Note: Foreign keyword argument cops don't exist in current RuboCop
