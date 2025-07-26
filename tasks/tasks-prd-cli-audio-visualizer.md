@@ -25,9 +25,11 @@
 - `lib/cli_visualizer/application.rb` - Main application controller and orchestration (✅ ENHANCED)
 - `lib/cli_visualizer/audio/capture.rb` - Audio capture abstraction layer (✅ CREATED)
 - `spec/audio/capture_spec.rb` - Audio capture abstraction tests (✅ CREATED)
+- `spec/audio/file_player_spec.rb` - Audio file player tests (✅ CREATED)
+- `spec/audio/file_player_integration_spec.rb` - Audio file player integration tests (✅ CREATED)
 - `lib/cli_visualizer/audio/macos_capture.rb` - macOS-specific audio capture using Core Audio
 - `lib/cli_visualizer/audio/linux_capture.rb` - Linux-specific audio capture using ALSA/PulseAudio
-- `lib/cli_visualizer/audio/file_player.rb` - Audio file playback functionality
+- `lib/cli_visualizer/audio/file_player.rb` - Audio file playback functionality (✅ CREATED)
 - `lib/cli_visualizer/audio/processor.rb` - Audio signal processing (FFT, frequency analysis)
 - `lib/cli_visualizer/visualizer/base.rb` - Base class for all visualization modes
 - `lib/cli_visualizer/visualizer/spectrum.rb` - Frequency spectrum bar visualization
@@ -79,7 +81,7 @@
   - [x] 2.1 Create audio capture abstraction layer in `lib/cli_visualizer/audio/capture.rb`
   - [x] 2.2 Implement macOS Core Audio integration using FFI
   - [x] 2.3 Implement Linux ALSA/PulseAudio integration using FFI
-  - [ ] 2.4 Build audio file player for MP3, WAV, FLAC support
+  - [x] 2.4 Build audio file player for MP3, WAV, FLAC support
   - [ ] 2.5 Implement FFT-based frequency analysis in audio processor
   - [ ] 2.6 Create audio buffer management for real-time processing
   - [ ] 2.7 Add audio source switching mechanism (system vs file)
