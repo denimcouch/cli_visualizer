@@ -8,16 +8,25 @@ Gem::Specification.new do |spec|
   spec.authors = ["Alex Mata"]
   spec.email = ["alexmatasoftware@gmail.com"]
 
-  spec.summary = "TODO: Write a short summary, because RubyGems requires one."
-  spec.description = "TODO: Write a longer description or delete this line."
-  spec.homepage = "TODO: Put your gem's website or public repo URL here."
+  spec.summary = "Real-time audio visualizer for the terminal"
+  spec.description = <<~DESC
+    CLI Audio Visualizer is a cross-platform command-line tool that creates real-time
+    audio visualizations in your terminal. Features multiple visualization modes including
+    frequency spectrum bars, waveform patterns, and abstract artistic displays. Supports
+    both system audio capture and audio file playback with customizable colors, sensitivity,
+    and display options.
+  DESC
+  spec.homepage = "https://github.com/denimcouch/cli_visualizer"
+  spec.license = "MIT"
   spec.required_ruby_version = ">= 3.1.0"
 
-  spec.metadata["allowed_push_host"] = "TODO: Set to your gem server 'https://example.com'"
-
+  # Gem metadata
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "TODO: Put your gem's public repo URL here."
-  spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
+  spec.metadata["source_code_uri"] = "https://github.com/denimcouch/cli_visualizer"
+  spec.metadata["changelog_uri"] = "https://github.com/denimcouch/cli_visualizer/blob/main/CHANGELOG.md"
+  spec.metadata["bug_tracker_uri"] = "https://github.com/denimcouch/cli_visualizer/issues"
+  spec.metadata["documentation_uri"] = "https://github.com/denimcouch/cli_visualizer/blob/main/README.md"
+  spec.metadata["rubygems_mfa_required"] = "true"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
@@ -32,9 +41,30 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  # Uncomment to register a new dependency of your gem
-  # spec.add_dependency "example-gem", "~> 1.0"
+  # Runtime dependencies
+  spec.add_dependency "dry-configurable", "~> 1.0"
+  spec.add_dependency "ffi", "~> 1.15"
+  spec.add_dependency "tty-cursor", "~> 0.7"
+  spec.add_dependency "tty-screen", "~> 0.8"
 
-  # For more information and examples about making a new gem, check out our
-  # guide at: https://bundler.io/guides/creating_gem.html
+  # Development dependencies
+  spec.add_development_dependency "rake", "~> 13.0"
+  spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "rubocop", "~> 1.21"
+  spec.add_development_dependency "rubocop-rake", "~> 0.6"
+  spec.add_development_dependency "rubocop-rspec", "~> 2.0"
+
+  # Post-install message
+  spec.post_install_message = <<~MSG
+    Thank you for installing CLI Audio Visualizer!
+
+    To get started, run:
+      cli_visualizer --help
+
+    For system audio capture, you may need to install platform-specific dependencies:
+    - macOS: No additional dependencies required
+    - Linux: ALSA or PulseAudio development headers may be needed
+
+    Visit https://github.com/denimcouch/cli_visualizer for more information.
+  MSG
 end

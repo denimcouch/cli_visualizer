@@ -9,3 +9,89 @@
 
 # rspec failure tracking
 .rspec_status
+
+# Ruby and Gem files
+*.gem
+*.rbc
+.ruby-version
+.ruby-gemset
+.rvmrc
+Gemfile.lock
+
+# Bundler
+vendor/bundle
+vendor/cache
+
+# Documentation
+/rdoc/
+/.yardoc/
+/doc/
+
+# Audio files and test data
+*.wav
+*.mp3
+*.flac
+*.aac
+*.ogg
+*.m4a
+/test_audio/
+/sample_audio/
+/audio_samples/
+
+# Configuration files (may contain sensitive settings)
+config/local.yml
+config/development.yml
+config/production.yml
+.env
+.env.*
+
+# Development and debugging
+.byebug_history
+.pry_history
+.irb_history
+
+# Operating System files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# Log files
+*.log
+log/
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+/tmp/
+.sass-cache/
+
+# Audio processing artifacts
+*.fft
+*.spectrum
+/cache/
+/audio_cache/
+
+# Platform-specific build artifacts
+*.o
+*.so
+*.dylib
+*.dll
+
+# Coverage reports
+/coverage/
+coverage.xml
+*.lcov

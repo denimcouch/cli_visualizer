@@ -47,12 +47,13 @@
 - [ ] 1.0 Project Setup and Foundation
 
   - [x] 1.1 Initialize Ruby gem structure with `bundle gem cli_visualizer`
-  - [ ] 1.2 Configure Gemfile with necessary dependencies (rspec, ffi)
-  - [ ] 1.3 Set up CLI executable in `bin/cli_visualizer` with proper shebang
-  - [ ] 1.4 Create main library entry point `lib/cli_visualizer.rb`
-  - [ ] 1.5 Configure RSpec testing framework and directory structure
-  - [ ] 1.6 Set up basic Git workflow and .gitignore for Ruby projects
-  - [ ] 1.7 Create gemspec file with project metadata and dependencies
+  - [x] 1.2 Configure Gemfile with necessary dependencies (rspec, ffi)
+  - [x] 1.3 Set up CLI executable in `bin/cli_visualizer` with proper shebang
+  - [x] 1.4 Create main library entry point `lib/cli_visualizer.rb`
+  - [x] 1.5 Configure RSpec testing framework and directory structure
+  - [x] 1.6 Set up basic Git workflow and .gitignore for Ruby projects
+  - [x] 1.7 Create gemspec file with project metadata and dependencies
+  - [x] 1.8 Set up github actions that run tests on every PR and push to main
 
 - [ ] 2.0 Audio Capture and Processing System
 
